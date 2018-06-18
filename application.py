@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect,jsonify, url_for, flash, make_response,json
+from flask import Flask, render_template, request, redirect,jsonify, url_for, flash
 import requests
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
@@ -43,74 +43,44 @@ def item_page(category,item):
 
 @app.route('/catalog/add', methods=['GET','POST'])
 def add_item():
-    try:
-        user = login_session.get('current_user')
-        if(request.method=='GET'):
-            full_categories= session.query(Category).all()
-            return render_template('add_item.html', full_categories=full_categories)
+    if(request.method=='GET'):
+        full_categories= session.query(Category).all()
+        return render_template('add_item.html', full_categories=full_categories)
 
-        else:
-            category_id= session.query(Category).filter_by(name=request.form['Category']).one().id
-            item = Item(title=request.form['Title'],description=request.form['Description'], category_id=category_id)
-            session.add(item)
-            session.commit()
-            return redirect(url_for('homepage'))
-
-    except KeyError:
+    else:
+        category_id= session.query(Category).filter_by(name=request.form['Category']).one().id
+        item = Item(title=request.form['Title'],description=request.form['Description'], category_id=category_id)
+        session.add(item)
+        session.commit()
         return redirect(url_for('homepage'))
+
 
 
 @app.route('/catalog/<item>/edit', methods=['GET','POST'])
 def edit_item(item):
-    if(login_session.get('current_user')):
-        item_to_edit= session.query(Item).filter_by(title = item).one()
-        if (request.method=='GET'):
-            full_categories = session.query(Category).all()
-            current_category = session.query(Category).filter_by(id=item_to_edit.category_id).one().name
-            return render_template('edit_item.html', item_to_edit=item_to_edit, full_categories=full_categories, current_category=current_category)
-        else:
-            item_to_edit.title = request.form['Title']
-            item_to_edit.description = request.form['Description']
-            item_to_edit.category_id = session.query(Category).filter_by(name=request.form['Category']).one().id
-            return redirect(url_for('category_page',category=request.form['Category']))
-
+    item_to_edit= session.query(Item).filter_by(title = item).one()
+    if (request.method=='GET'):
+        full_categories = session.query(Category).all()
+        current_category = session.query(Category).filter_by(id=item_to_edit.category_id).one().name
+        return render_template('edit_item.html', item_to_edit=item_to_edit, full_categories=full_categories, current_category=current_category)
     else:
-        return redirect(url_for('homepage'))
+        item_to_edit.title = request.form['Title']
+        item_to_edit.description = request.form['Description']
+        item_to_edit.category_id = session.query(Category).filter_by(name=request.form['Category']).one().id
+        return redirect(url_for('category_page',category=request.form['Category']))
 
 
 @app.route('/catalog/<item>/delete/', methods=['GET','POST'])
 def delete_item(item):
-    if(login_session.get('current_user')):
-        item_to_delete=session.query(Item).filter_by(title=item).one()
-        category=session.query(Category).filter_by(id=item_to_delete.category_id).one()
-        if(request.method=='GET'):
-            return render_template('delete_item.html',item=item_to_delete, category=category)
-        else:
-            session.delete(item_to_delete)
-            session.commit()
-            print(category.name)
-            return redirect(url_for('category_page',category=category.name))
+    item_to_delete=session.query(Item).filter_by(title=item).one()
+    category=session.query(Category).filter_by(id=item_to_delete.category_id).one()
+    if(request.method=='GET'):
+        return render_template('delete_item.html',item=item_to_delete, category=category)
     else:
-        return redirect(url_for('homepage'))
-
-
-
-
-@app.route('/fbconnect',methods=['POST'])
-def fbconnect():
-    fb_id=request.form['authResponse[userID]']
-    login_session['current_user'] = fb_id
-    response = make_response(json.dumps('Successfully connected.'), 200)
-    response.headers['Content-Type'] = 'application/json'
-    return response
-
-
-@app.route('/fbdisconnect',methods=['POST'])
-def fbdisconnect():
-    del login_session['current_user']
-    response = make_response(json.dumps('Successfully disconnected.'), 200)
-    response.headers['Content-Type'] = 'application/json'
-    return response
+        session.delete(item_to_delete)
+        session.commit()
+        print(category.name)
+        return redirect(url_for('category_page',category=category.name))
 
 
 if __name__ == '__main__':

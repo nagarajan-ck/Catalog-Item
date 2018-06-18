@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Item Page</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
   </head>
   <body>
@@ -25,11 +24,7 @@
                 'Welcome to Item Catalog , ' + response.name + '!';
             });
 
-          $.ajax({
-          type: 'POST',
-          url: '/fbconnect',
-          data: response,
-        });
+
         code = `  <a href="{{url_for('edit_item',item=item)}}">Edit</a>
           <a href="{{url_for('delete_item',item=item)}}">Delete</a>
         `
@@ -41,11 +36,6 @@
         document.getElementById('manipulate').innerHTML='';
         // The person is not logged into your app or we are unable to tell.
         document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
-        $.ajax({
-        type: 'POST',
-        url: '/fbdisconnect',
-        data: response,
-      });
       }
     }
 

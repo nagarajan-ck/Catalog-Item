@@ -2,7 +2,6 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <title>Edit Item {{item_to_edit.name}}</title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
   </head>
@@ -19,6 +18,7 @@
       if (response.status === 'connected')
       {
           // Logged into your app and Facebook.
+          
 
             FB.api('/me', function(response)
             {
@@ -26,20 +26,11 @@
                 'Welcome to Item Catalog , ' + response.name + '!';
             });
 
-          $.ajax({
-          type: 'POST',
-          url: '/fbconnect',
-          data: response,
-        });
       }
       else
       {
         // The person is not logged into your app or we are unable to tell.
-        $.ajax({
-        type: 'POST',
-        url: '/fbdisconnect',
-        data: response,
-      });
+
       window.location='/';
       }
     }
