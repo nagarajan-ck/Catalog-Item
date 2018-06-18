@@ -1,0 +1,48 @@
+header{
+  background-color: #20D7D1;
+  height: 75px;
+  margin-bottom: 10px;
+}
+body{
+  background-color: #b0f196;
+}
+
+#heading
+{
+  position: absolute;
+  left: 100px;
+  background: transparent;
+  top: 10px;
+}
+
+#log{
+  color: Red;
+  position: absolute;
+  right: 100px;
+  top:35px;
+}
+
+
+div#content{
+  background: linear-gradient(to bottom, #20D7D1 0%, #b0f196 100%);
+  height: 700px;
+}
+#category{
+  width:50%;
+  float: left;
+  background-color: transparent;
+}
+#items{
+  background-color: transparent;
+  width:50%;
+  float:right;
+
+}
+
+li{
+  list-style-type: none;
+}
+
+#home{
+  padding: 30px;
+}
