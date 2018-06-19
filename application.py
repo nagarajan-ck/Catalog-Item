@@ -48,11 +48,13 @@ def add_item():
         return render_template('add_item.html', full_categories=full_categories)
 
     else:
-        category_id= session.query(Category).filter_by(name=request.form['Category']).one().id
+        category= session.query(Category).filter_by(name=request.form['Category']).one()
+        category_id=category.id
         item = Item(title=request.form['Title'],description=request.form['Description'], category_id=category_id)
         session.add(item)
         session.commit()
-        return redirect(url_for('homepage'))
+        flash("Item has been added!")
+        return redirect(url_for('category_page',category=category.name))
 
 
 
@@ -67,6 +69,7 @@ def edit_item(item):
         item_to_edit.title = request.form['Title']
         item_to_edit.description = request.form['Description']
         item_to_edit.category_id = session.query(Category).filter_by(name=request.form['Category']).one().id
+        flash("Item has been edited!")
         return redirect(url_for('category_page',category=request.form['Category']))
 
 
@@ -79,8 +82,30 @@ def delete_item(item):
     else:
         session.delete(item_to_delete)
         session.commit()
-        print(category.name)
+        flash("Item has been deleted!")
         return redirect(url_for('category_page',category=category.name))
+
+@app.route('/catalog.json')
+def catalogJSON():
+    category = session.query(Category).all()
+    json3=""
+    json_array=[]
+    for i in category:
+        item= session.query(Item).filter_by(category_id=i.id).all()
+        for j in item:
+            category_json = i.serialize
+            item_json = j.serialize
+            consolidated_json = JSON(category_json.get('name'),category_json.get('id'),item_json )
+            json_array.append(consolidated_json)
+    return jsonify(Catalog=[i for i in json_array])
+
+
+def JSON(name,id,item):
+    return {
+    'Id' : id,
+    'Name': name,
+    'item': [item]
+    }
 
 
 if __name__ == '__main__':
