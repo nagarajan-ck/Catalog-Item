@@ -34,4 +34,37 @@ session.add(item)
 session.commit()
 
 
+item = Item(id = 1, title='Gloves', description='Goalkeeper uses this', category_id=1)
+session.add(item)
+session.commit()
+
+item = Item(id = 2, title='Ball', description='Baseball ball', category_id=2)
+session.add(item)
+session.commit()
+
+item = Item(id = 3, title='Hoops', description='Ball goes in here', category_id=3)
+session.add(item)
+session.commit()
+
+item = Item(id = 4, title='Goggles', description='Underwater vision', category_id=4)
+session.add(item)
+session.commit()
+
+item = Item(id = 5, title='Boots', description='Shooting accuracy', category_id=1)
+session.add(item)
+session.commit()
+
+item = Item(id = 6, title='Cap', description='For the striker', category_id=2)
+session.add(item)
+session.commit()
+
+item = Item(id = 7, title='Jersey', description='Mens basketball team', category_id=3)
+session.add(item)
+session.commit()
+
+item = Item(id = 8, title='Swimming Suit', description='Light on the body', category_id=4)
+session.add(item)
+session.commit()
+
+
 print ("added menu items!")
