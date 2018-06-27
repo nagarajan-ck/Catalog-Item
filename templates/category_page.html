@@ -21,6 +21,18 @@
         {%endif%}
       </div>
   </header>
+
+  {%with messages = get_flashed_messages()%}
+    {%if messages%}
+      <ul>
+        {%for message in messages%}
+          <li> <strong>{{message}}</strong> </li>
+        {%endfor%}
+      </ul>
+    {%endif%}
+    {%endwith%}
+
+
 <div id="content">
       <div id="category">
         <h3>Categories</h3>
@@ -37,6 +49,12 @@
             {% endfor %}
         </ul>
       </div>
+
+{% if login_status %}
+<div>
+  <a href="{{url_for('add_item')}}">Create Item</a>
+</div>
+{%endif%}
 
 <div id="items">
 

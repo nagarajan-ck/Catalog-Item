@@ -49,6 +49,13 @@
         </ul>
     </div>
 
+    {% if login_status %}
+    <div>
+      <a href="{{url_for('add_item')}}">Create Item</a>
+    </div>
+    {%endif%}
+
+
     <div id="items">
         <div id="manipulate"></div>
         <h3>Latest Items</h3>
