@@ -3,26 +3,26 @@
 
 ## ABOUT
 
-Catalog Item application lets you view,add,edit and delete items for many categories. The app lets you do CRUD operations provided you have authenticated yourselves using Facebook. **Facebook will have permissions to access your public profile only, and the app will not have access to post on Facebook on your behalf.**
+Catalog Item application lets you view,add,edit and delete items for many categories. The app lets you do CRUD operations provided you have authenticated yourselves using Facebook. You will need a Google account to use this application.
 
 The application can be viewed on the localhost at port 8000. The app lets you do the following operations.
 
 #### Add
 
-Add as many items as you want to a category, select the name and the category to which it belongs upon creation and give it a suitable description
+Add as many items as you want to a category, select the name and the category to which it belongs upon creation and give it a suitable description. You will need to log in to add an item.
 
 #### Edit
 
-Edit existing items, change its name, move it between categories and save the changes.
+Edit existing items that was created by you, change its name, move it between categories and save the changes.
 
 #### Delete
 
-Delete the item from the inventory altogether.
+Delete an item that was created by you from the inventory altogether.
 
 
 ## REQUIREMENTS
 
-The tool uses **python3** and **SQLAlchemy** for the analysis. So it is essential to have python3 with the sqlalchemy library and sql installed on your machine.
+The tool uses **python3** and **SQLAlchemy** for the analysis. It uses **OAuth** for authentication. So it is essential to have python3 with the sqlalchemy library and sql installed on your machine along with OAuth.
 
 
 # SETTING THE ENVIRONMENT
@@ -43,9 +43,9 @@ The tool uses **python3** and **SQLAlchemy** for the analysis. So it is essentia
 
 `http://localhost:8000`
 
-- Log into the app using Facebook authentication to execute CRUD operations
+- Log into the app using Google authentication to execute CRUD operations
 
 
 ## CREDITS
 
-This application uses code from Facebook for the authentication process such as async loads for the pages and the login button. The code has been customised for the suitability of this app.
+This application uses code from Google OAuth for the authentication process such as the login button. The code has been customised for the suitability of this app.
